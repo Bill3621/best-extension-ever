@@ -56,18 +56,19 @@ function addRandomImage() {
     );
 }
 
-function startRandomImageTimer() {
+function startRandomImageTimer(intervalTime) {
     const randomTime =
-        Math.floor(Math.random() * (5 * 60 * 1000)) + 1 * 60 * 1000; // Random time between 1 to 5 minutes
+        Math.floor(Math.random() * (intervalTime * 60 * 1000)) + 1 * 60 * 1000; // Random time between 1 minute and intervalTime minutes
     setTimeout(() => {
         addRandomImage();
-        startRandomImageTimer();
+        startRandomImageTimer(intervalTime);
     }, randomTime);
 }
 
-chrome.storage.sync.get(["toggleState"], function (result) {
+chrome.storage.sync.get(["toggleState", "intervalTime"], function (result) {
     if (result.toggleState) {
+        const intervalTime = result.intervalTime || 1;
         addRandomImage();
-        startRandomImageTimer();
+        startRandomImageTimer(intervalTime);
     }
 });
