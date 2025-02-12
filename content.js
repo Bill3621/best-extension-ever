@@ -30,19 +30,19 @@ function addRandomImage() {
     closeButton.style.right = "0";
     closeButton.style.backgroundColor = "red";
     closeButton.style.color = "white";
-    closeButton.style.border = "1px solid black"; // Add border for visibility
-    closeButton.style.outline = "1px solid black"; // Add outline for visibility
+    closeButton.style.border = "1px solid black";
+    closeButton.style.outline = "1px solid black";
     closeButton.style.cursor = "pointer";
-    closeButton.style.zIndex = 999999 + 1; // Ensure the button is above the image
-    closeButton.style.fontSize = "16px"; // Increase button size
-    closeButton.style.padding = "5px"; // Increase button padding
+    closeButton.style.zIndex = 999999 + 1;
+    closeButton.style.fontSize = "16px";
+    closeButton.style.padding = "5px";
     closeButton.addEventListener("click", () => {
         document.body.removeChild(container);
     });
 
     container.appendChild(img);
     container.appendChild(closeButton);
-    document.body.appendChild(container); // Append to body before calculating position
+    document.body.appendChild(container);
 
     img.onload = function () {
         const { x, y } = getRandomPosition(container);
