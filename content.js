@@ -2,21 +2,26 @@ console.log("Hello from content.js");
 
 function getRandomPosition(element) {
     const x = Math.floor(
-        Math.random() * (window.innerWidth - element.clientWidth)
+        Math.random() *
+            (document.documentElement.scrollWidth - element.clientWidth - 5)
     );
     const y = Math.floor(
-        Math.random() * (window.innerHeight - element.clientHeight)
+        Math.random() *
+            (document.documentElement.scrollHeight - element.clientHeight - 5)
     );
     return { x, y };
 }
 
 function addRandomImage() {
+    const container = document.createElement("div");
+    container.style.position = "absolute";
+    container.style.zIndex = 999999;
+
     const img = document.createElement("img");
-    img.src = `images/collection/image${
-        Math.floor(Math.random() * 10) + 1
-    }.jpg`; // Assuming there are 10 images named image1.jpg to image10.jpg
-    img.style.position = "absolute";
-    img.style.zIndex = 1000;
+    img.style.display = "hidden";
+    const randomSize = Math.floor(Math.random() * (30 - 15 + 1)) + 15; // Random size between 15 and 30
+    img.style.maxWidth = `${randomSize}vw`; // Set random max width
+    img.style.height = "auto"; // Maintain aspect ratio
 
     const closeButton = document.createElement("button");
     closeButton.innerText = "X";
@@ -25,18 +30,30 @@ function addRandomImage() {
     closeButton.style.right = "0";
     closeButton.style.backgroundColor = "red";
     closeButton.style.color = "white";
-    closeButton.style.border = "none";
+    closeButton.style.border = "1px solid black"; // Add border for visibility
+    closeButton.style.outline = "1px solid black"; // Add outline for visibility
     closeButton.style.cursor = "pointer";
+    closeButton.style.zIndex = 999999 + 1; // Ensure the button is above the image
+    closeButton.style.fontSize = "16px"; // Increase button size
+    closeButton.style.padding = "5px"; // Increase button padding
     closeButton.addEventListener("click", () => {
-        document.body.removeChild(img);
+        document.body.removeChild(container);
     });
 
-    img.appendChild(closeButton);
-    document.body.appendChild(img);
+    container.appendChild(img);
+    container.appendChild(closeButton);
+    document.body.appendChild(container); // Append to body before calculating position
 
-    const { x, y } = getRandomPosition(img);
-    img.style.left = `${x}px`;
-    img.style.top = `${y}px`;
+    img.onload = function () {
+        const { x, y } = getRandomPosition(container);
+        container.style.left = `${x}px`;
+        container.style.top = `${y}px`;
+        img.style.display = "block";
+    };
+
+    img.src = chrome.runtime.getURL(
+        `images/collection/image${Math.floor(Math.random() * 20)}.png`
+    );
 }
 
 function startRandomImageTimer() {
@@ -48,4 +65,9 @@ function startRandomImageTimer() {
     }, randomTime);
 }
 
-startRandomImageTimer();
+chrome.storage.sync.get(["toggleState"], function (result) {
+    if (result.toggleState) {
+        addRandomImage();
+        startRandomImageTimer();
+    }
+});

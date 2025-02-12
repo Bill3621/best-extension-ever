@@ -3,6 +3,7 @@
     "description": "This extension is the best extension ever in the history of extensions.",
     "version": "1.0",
     "manifest_version": 3,
+    "permissions": ["storage"],
     "action": {
         "default_popup": "popup.html",
         "default_icon": "images/icon.png"
@@ -11,6 +12,12 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["content.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["images/collection/*.png"],
+            "matches": ["http://*/*", "https://*/*"]
         }
     ]
 }

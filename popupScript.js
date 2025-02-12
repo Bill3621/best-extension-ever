@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const toggleSwitch = document.getElementById("toggle-switch");
-    const savedState = localStorage.getItem("toggleState") === "true";
-    toggleSwitch.checked = savedState;
+    chrome.storage.sync.get(["toggleState"], function (result) {
+        toggleSwitch.checked = result.toggleState || false;
+    });
 
     toggleSwitch.addEventListener("change", function () {
-        localStorage.setItem("toggleState", toggleSwitch.checked);
+        chrome.storage.sync.set({ toggleState: toggleSwitch.checked });
     });
 });
