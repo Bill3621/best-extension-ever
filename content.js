@@ -1,5 +1,3 @@
-console.log("Hello from content.js");
-
 function getRandomPosition(element) {
     const x = Math.floor(
         Math.random() *
