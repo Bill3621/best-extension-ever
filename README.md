@@ -2,7 +2,7 @@
 
 ## Description
 
-This browser extension randomly displays furry femboys on the screen at random intervals.
+This browser extension randomly displays furry femboys on the screen at random intervals by fetching random images from an API.
 
 ## Features
 
@@ -22,7 +22,7 @@ This browser extension randomly displays furry femboys on the screen at random i
 ## Usage
 
 1. Click on the extension icon to open the popup.
-2. Use the toggle switch to enable or disable the extension.
+2. Use the toggle switch to enable or disable the image display feature.
 3. Adjust the interval time using the input field (1 to 10 minutes).
 4. Images will start appearing at random positions on the webpage at random intervals.
 

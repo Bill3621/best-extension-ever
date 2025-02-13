@@ -10,13 +10,14 @@ function getRandomPosition(element) {
     return { x, y };
 }
 
-function addRandomImage() {
+function addRandomImage(imageUrl) {
     const container = document.createElement("div");
     container.style.position = "absolute";
     container.style.zIndex = 999999;
+    container.style.display = "none";
 
     const img = document.createElement("img");
-    img.style.display = "hidden";
+    img.style.display = "block";
     const randomSize = Math.floor(Math.random() * (30 - 15 + 1)) + 15; // Random size between 15 and 30
     img.style.maxWidth = `${randomSize}vw`; // Set random max width
     img.style.height = "auto"; // Maintain aspect ratio
@@ -46,19 +47,29 @@ function addRandomImage() {
         const { x, y } = getRandomPosition(container);
         container.style.left = `${x}px`;
         container.style.top = `${y}px`;
-        img.style.display = "block";
+        container.style.display = "block";
     };
 
-    img.src = chrome.runtime.getURL(
-        `images/collection/image${Math.floor(Math.random() * 20)}.png`
-    );
+    img.src = imageUrl;
+}
+
+function fetchRandomImage() {
+    fetch(
+        "https://e621.net/posts.json?tags=femboy+rating%3As+order%3Arandom+-animated&page=1&limit=1"
+    )
+        .then((response) => response.json())
+        .then((data) => {
+            const imageUrl = data.posts[0].file.url;
+            addRandomImage(imageUrl);
+        })
+        .catch((error) => console.error("Error fetching image:", error));
 }
 
 function startRandomImageTimer(intervalTime) {
     const randomTime =
         Math.floor(Math.random() * (intervalTime * 60 * 1000)) + 1 * 60 * 1000; // Random time between 1 minute and intervalTime minutes
     setTimeout(() => {
-        addRandomImage();
+        fetchRandomImage();
         startRandomImageTimer(intervalTime);
     }, randomTime);
 }
@@ -66,6 +77,7 @@ function startRandomImageTimer(intervalTime) {
 chrome.storage.sync.get(["toggleState", "intervalTime"], function (result) {
     if (result.toggleState) {
         const intervalTime = result.intervalTime || 1;
+        fetchRandomImage();
         startRandomImageTimer(intervalTime);
     }
 });
