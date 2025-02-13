@@ -66,7 +66,6 @@ function startRandomImageTimer(intervalTime) {
 chrome.storage.sync.get(["toggleState", "intervalTime"], function (result) {
     if (result.toggleState) {
         const intervalTime = result.intervalTime || 1;
-        addRandomImage();
         startRandomImageTimer(intervalTime);
     }
 });
