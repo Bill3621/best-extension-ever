@@ -14,7 +14,8 @@ function addRandomImage(imageUrl) {
     const container = document.createElement("div");
     container.style.position = "absolute";
     container.style.zIndex = 999999;
-    container.style.display = "none";
+    container.style.left = `-1000px`;
+    container.style.top = `-1000px`;
 
     const img = document.createElement("img");
     img.style.display = "block";
@@ -27,14 +28,19 @@ function addRandomImage(imageUrl) {
     closeButton.style.position = "absolute";
     closeButton.style.top = "0";
     closeButton.style.right = "0";
-    closeButton.style.backgroundColor = "red";
+    closeButton.style.backgroundColor = "rgba(255, 0, 0, 0.8)";
     closeButton.style.color = "white";
-    closeButton.style.border = "1px solid black";
-    closeButton.style.outline = "1px solid black";
+    closeButton.style.border = "none";
+    closeButton.style.borderRadius = "50%";
+    closeButton.style.width = "30px";
+    closeButton.style.height = "30px";
+    closeButton.style.display = "flex";
+    closeButton.style.alignItems = "center";
+    closeButton.style.justifyContent = "center";
     closeButton.style.cursor = "pointer";
     closeButton.style.zIndex = 999999 + 1;
     closeButton.style.fontSize = "16px";
-    closeButton.style.padding = "5px";
+    closeButton.style.padding = "0";
     closeButton.addEventListener("click", () => {
         document.body.removeChild(container);
     });
@@ -55,7 +61,7 @@ function addRandomImage(imageUrl) {
 
 function fetchRandomImage() {
     fetch(
-        "https://e621.net/posts.json?tags=femboy+rating%3As+order%3Arandom+-animated&page=1&limit=1"
+        "https://e621.net/posts.json?tags=femboy+crossdressing+male+fur+-human+rating%3As+order%3Arandom+-animated+-comic+limit%3A1+status%3Aactive+score%3A>15"
     )
         .then((response) => response.json())
         .then((data) => {
