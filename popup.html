@@ -3,21 +3,25 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"
-        />
         <title>Extension Popup</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
                 padding: 20px;
+                background-color: #121212;
+                color: #ffffff;
+                text-align: center;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
             }
             .toggle-switch {
                 position: relative;
                 display: inline-block;
                 width: 60px;
                 height: 34px;
+                margin-bottom: 20px;
             }
             .toggle-switch input {
                 opacity: 0;
@@ -52,15 +56,38 @@
             input:checked + .slider:before {
                 transform: translateX(26px);
             }
+            .settings {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .settings label {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .settings input {
+                padding: 5px;
+                font-size: 16px;
+                width: 60px;
+                text-align: center;
+                margin-bottom: 20px;
+                background-color: #333;
+                color: #fff;
+                border: 1px solid #555;
+            }
+            .footer {
+                font-size: 12px;
+                color: #777;
+            }
         </style>
     </head>
     <body>
-        <h1>Toggle</h1>
+        <h1>Image Display Settings</h1>
         <label class="toggle-switch">
             <input type="checkbox" id="toggle-switch" />
             <span class="slider"></span>
         </label>
-        <div>
+        <div class="settings">
             <label for="interval-time">Interval Time (minutes):</label>
             <input
                 type="number"
@@ -69,6 +96,9 @@
                 max="10"
                 value="1"
             />
+        </div>
+        <div class="footer">
+            <p>Best Extension Ever</p>
         </div>
         <script src="popupScript.js"></script>
     </body>

@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const intervalTimeInput = document.getElementById("interval-time");
 
     chrome.storage.sync.get(["toggleState", "intervalTime"], function (result) {
-        toggleSwitch.checked = result.toggleState || false;
+        toggleSwitch.checked =
+            result.toggleState !== undefined ? result.toggleState : true;
         intervalTimeInput.value = result.intervalTime || 1;
     });
 
